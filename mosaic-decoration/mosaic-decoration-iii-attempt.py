@@ -40,26 +40,25 @@ for i in range(R):
 
 def calc_price():
     total = 0
-    for i in range(N):
-        for j in range(M):
-            total += pattern[i % R][j % C]
+    for y in range(N):
+        for x in range(M):
+            total += pattern[y % R][x % C]
     return total
-
 
 def calc_new_price(orig, offset_x, offset_y):
     new_price = orig
     for row in range(offset_y):
-        for cell in range(M):
-            old_cell = pattern[row % R][cell % C]
-            # new_cell = pattern[(row+offset_y) % R][cell % C]
-            new_cell = pattern[(row+offset_y) % R][(cell+offset_x) % C]
-            new_price = new_price - old_cell + new_cell
+        for cell in range(offset_y):
+            new_price -= pattern[row % R][cell % C]
+            new_price += pattern[(N+row) % R][(M+cell) % C]
+    for row in range(offset_y):
+        for cell in range(offset_x, M):
+            new_price -= pattern[row % R][cell % C]
+            new_price += pattern[(N+row) % R][cell % C]
     for col in range(offset_x):
         for cell in range(offset_y, N):
-            old_cell = pattern[cell % R][col % C]
-            # new_cell = pattern[cell % R][(col+offset_x) % C]
-            new_cell = pattern[(cell+offset_y) % R][(col+offset_x) % C]
-            new_price = new_price - old_cell + new_cell
+            new_price -= pattern[cell % R][col % C]
+            new_price += pattern[cell % R][(M+col) % C]
     return new_price
 
 

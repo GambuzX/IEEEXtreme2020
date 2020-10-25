@@ -28,24 +28,19 @@ R = get_number()    # rows of cells in the pattern
 C = get_number()    # columns of cells in the pattern
 
 pattern = []
-lowest_spot = [-1, -1]
-lowest_price = -1
 for i in range(R):
     row = []
     for j in range(C):
         price = get_number()
         row.append(price)
-        if price < lowest_price or lowest_price == -1:
-            lowest_price = price
-            lowest_spot = [i, j]
     pattern.append(row)
 
 
-def calc_price(x_off, y_off):
+def calc_price(y_off, x_off):
     total = 0
     for i in range(N):
         for j in range(M):
-            total += pattern[(x_off + i) % R][(y_off + j) % C]
+            total += pattern[(y_off + i) % R][(x_off + j) % C]
     return total
 
 final = 0
